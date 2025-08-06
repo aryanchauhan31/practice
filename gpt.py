@@ -67,7 +67,7 @@ if __name__ = '__main__':
     model = model,
     model_parameters = model.parameters()
     config = 'ds_config.json')
-
+  
   epochs = 20
   total_loss = 0
   model.train()
@@ -79,13 +79,13 @@ if __name__ = '__main__':
       model_engine.backward()
       model_engine.step()
       total_loss+=loss.item()
-  # evaluation loop
-model_engine.eval()
-correct =  predicted = 0
-for (inputs, labels) in test_loader:
-  inputs, labels = inputs.to(device), labels.to(device)
-  outputs = model_engine(inputs)
-  correct+= 
+    # evaluation loop
+  model_engine.eval()
+  correct =  predicted = 0
+  for (inputs, labels) in test_loader:
+    inputs, labels = inputs.to(device), labels.to(device)
+    outputs = model_engine(inputs)
+    correct +=  
       
 
 
