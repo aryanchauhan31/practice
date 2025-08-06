@@ -42,9 +42,21 @@ class Multihead_Attention(nn.Module):
     return atten_output
 
 class Transformer_Block(nn.Module):
-
-
-
+  def __init__(self, embed_dim, num_heads, ffn_hidden_dim):
+    self.atten = Multihead_Attention(emed_dim, num_heads)
+    self.ln1 = nn.LayerNorm(embed_dim)
+    self.ln2 = nn.LayerNorm(embed_dim)
+    self.ffn = nn.Sequential(
+      nn.Linear(embed_dim, ffn_hidden_dim),
+      nn.GeLU(),
+      nn.Linear(ffn_hidden_dim, embed_dim)
+    )
+  def forward(self, x, mask=None):
+    atten = self.atten(self.ln1(x), mask)
+    x = x+atten
+    ffn =  self.ffn(self.ln2(x))
+    x = x+ffn
+    return x
 
 
 if __name__ = '__main__':
@@ -58,6 +70,7 @@ if __name__ = '__main__':
 
   epochs = 20
   total_loss = 0
+  model.train()
   for _ in range(epochs):
     for (inputs, labels) in enumerate(train_loader):
       inputs, labels = inputs.to(device), labels.to(device)
@@ -67,6 +80,12 @@ if __name__ = '__main__':
       model_engine.step()
       total_loss+=loss.item()
   # evaluation loop
+model_engine.eval()
+correct =  predicted = 0
+for (inputs, labels) in test_loader:
+  inputs, labels = inputs.to(device), labels.to(device)
+  outputs = model_engine(inputs)
+  correct+= 
       
 
 
