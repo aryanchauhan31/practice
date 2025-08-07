@@ -84,8 +84,8 @@ if __name__ = '__main__':
   correct =  predicted = 0
   for (inputs, labels) in test_loader:
     inputs, labels = inputs.to(device), labels.to(device)
-    outputs = model_engine(inputs)
-    correct +=  
+    predicted = model_engine(inputs)
+    correct +=  (predicted==labels)
       
 
 
